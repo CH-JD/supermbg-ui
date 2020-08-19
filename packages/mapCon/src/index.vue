@@ -74,9 +74,7 @@
             }
         },
         props:['mapConfig'],
-        created(){
-
-        },
+        created(){},
         mounted(){},
         methods: {
             setConfig:function(type,value){

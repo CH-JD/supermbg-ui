@@ -17,7 +17,14 @@ import 'supermbgl-ui/lib/supermbgl-ui.css'
 
 Vue.use(supermbglUi)
 ```
-在项目中使用
+###在项目中使用
+1.组件
+``` 
+#使用
+<charts :id="'comBar'" :type="'bar,comBar'"   :data='data' :config=config class="charts" @chartClick = chartClick></charts>
 ```
-<supermbg-ui></supermbg-ui>
+2.工具
+``` 
+#使用
+this.PaintControlClass()
 ```
