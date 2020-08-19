@@ -20,11 +20,11 @@ Vue.use(supermbglUi)
 ###在项目中使用
 1.组件
 ``` 
-#使用
+#举例
 <charts :id="'comBar'" :type="'bar,comBar'"   :data='data' :config=config class="charts" @chartClick = chartClick></charts>
 ```
 2.工具
 ``` 
-#使用
+#举例
 this.PaintControlClass()
 ```
