@@ -1,8 +1,9 @@
 <template>
   <div id="map-box">
     <div id="map"></div>
-    <!--<map-con  :mapConfig = mapConfig @getConfig="getConfig"></map-con>-->
-    <base-map :baseMapData="baseMapData" @getBaseMap="getBaseMap"></base-map>
+    <!--<map-con :mapConfig = mapConfig @getConfig="getConfig"></map-con>-->
+    <base-map :map="map" :baseMapConfig="baseMapConfig" @getBaseMap="getBaseMap"></base-map>
+    <!--<chart :id="'comBar'" :type="'bar,comBar'" style="position:fixed;z-index:9999;left:0;top:10px;width: 500px;height:400px"></chart>-->
   </div>
 </template>
 <script>
@@ -13,10 +14,11 @@
         name: 'home',
         data(){
             return {
-                baseMapData:[
+                map:null,
+                baseMapConfig:[
                     {
-                        name: "矢量地图",
-                        key: "map_vector",
+                        name: "矢量图",
+                        key: "map_vec",
                         path: 'https://iserver.supermap.io/iserver/services/map-china400/rest/maps/China/zxyTileImage.png?prjCoordSys={"epsgCode":3857}&z={z}&x={x}&y={y}',
                         bounds: "",
                         label: "",
@@ -26,7 +28,18 @@
                         isShow: true
                     },
                     {
-                        name: "影像地图",
+                        name: "地形图",
+                        key: "map_ter",
+                        path: 'https://iserver.supermap.io/iserver/services/maps/rest/maps/World/zxyTileImage.png?prjCoordSys={"epsgCode":3857}&z={z}&x={x}&y={y}',
+                        bounds: "",
+                        label: "",
+                        center: [],
+                        zIndex: 0,
+                        checked:false,
+                        isShow: true
+                    },
+                    {
+                        name: "影像图",
                         key: "map_img",
                         path: 'https://iserver.supermap.io/iserver/services/maps/rest/maps/World/zxyTileImage.png?prjCoordSys={"epsgCode":3857}&z={z}&x={x}&y={y}',
                         bounds: "",
@@ -37,8 +50,8 @@
                         isShow: true
                     },
                     {
-                        name: "黑夜地图",
-                        key: "map_black",
+                        name: "黑夜图",
+                        key: "map_blk",
                         path: 'https://iserver.supermap.io/iserver/services/map-china400/rest/maps/ChinaDark/zxyTileImage.png?prjCoordSys={"epsgCode":3857}&z={z}&x={x}&y={y}',
                         bounds: "",
                         label: "",
@@ -46,7 +59,7 @@
                         zIndex: 2,
                         checked:false,
                         isShow: true
-                    },
+                    }
                 ],
                 mapConfig:{
                     boderConfig:{
@@ -300,15 +313,14 @@
             }
         },
         mounted(){
-            Vue.prototype.$map = new mapboxgl.Map({
+            this.map=Vue.prototype.$map = new mapboxgl.Map({
                 container: 'map',
                 style:{
                     "version": 8,
                     "sources": {
                         "raster-tiles": {
-                            "attribution": "",
                             "type": "raster",
-                            "tiles": ['https://iserver.supermap.io/iserver/services/maps/rest/maps/World/zxyTileImage.png?prjCoordSys={"epsgCode":3857}&z={z}&x={x}&y={y}'],
+                            "tiles": ['https://iserver.supermap.io/iserver/services/map-china400/rest/maps/China/zxyTileImage.png?prjCoordSys={"epsgCode":3857}&z={z}&x={x}&y={y}'],
                             "tileSize": 256
                         }
                     },
@@ -319,7 +331,6 @@
                         "minzoom": 0,
                         "maxzoom": 22
                     }],
-                    "sprite": "https://iclient.supermap.io/web/styles/street/sprite"
                 },
                 center: [104.3, 32],
                 minZoom: 3.5,

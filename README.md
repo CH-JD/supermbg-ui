@@ -6,16 +6,16 @@ npm config set registry 'http://192.168.100.14:8081/repository/npm-group/'
 ```
 ### Install
 ```
-npm install supermbg-ui -S
+npm install supermbgl-ui -S
 ```
 
 ### Usage
 ```
 import Vue from "vue"
-import supermbgUi from 'supermbg-ui'
-import 'supermbg-ui/lib/supermbg-ui.css'
+import supermbglUi from 'supermbgl-ui'
+import 'supermbgl-ui/lib/supermbgl-ui.css'
 
-Vue.use(supermbgUi)
+Vue.use(supermbglUi)
 ```
 在项目中使用
 ```

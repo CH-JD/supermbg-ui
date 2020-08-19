@@ -4,11 +4,9 @@ import router from './router'
 import store from './store'
 // 导入组件库
 import supermbglUi from './../packages'
-import mapboxgl from 'mapbox-gl';
 import '@supermap/iclient-mapboxgl';
 // 注册组件库
 Vue.use(supermbglUi)
-// supermbglUi.install(Vue)
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI);

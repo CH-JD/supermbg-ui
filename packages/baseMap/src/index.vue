@@ -1,7 +1,7 @@
 <template>
   <div class="basic-layer-box">
-    <div class="basic-layer">
-      <button v-for="(val,index) of baseMapData" :disabled="val.isChecked" :key="index" :class="[{'actived':val.isChecked},val.key]" @click="toggleBaseLayer(val)">
+    <div class="basic-layer" v-if=" baseMapConfig">
+      <button v-for="(val,index) of baseMapConfig" :disabled="val.checked" :key="index" :class="[{'actived':val.checked},val.key]" @click="toggleBaseLayer(val)">
         <span>{{val.name}}</span>
       </button>
     </div>
@@ -12,25 +12,31 @@
         name: 'baseMap',
         data () {
             return {
-
             }
         },
-        props:['baseMapData'],
+        props:['baseMapConfig',"map"],
         mounted(){
-            console.log(this.baseMapData);
         },
         methods: {
-            toggleBaseLayer(key){
-                this.$emit("getBaseMap",key);
-            }
-        },
-        watch:{
-            baseMapData:{
-                handler(newVal,oldVal){
-
-                },
-                deep:true,
-                immediate:true,
+            toggleBaseLayer(val){
+                if(!this.map.getSource(val.key)){
+                  this.map.addSource(val.key,{
+                      "type": "raster",
+                      "tiles": [val.path],
+                      "tileSize": 256
+                  });
+                }
+                if(this.map.getLayer(val.key)){
+                    this.map.removeLayer(val.key);
+                }
+                this.map.addLayer({
+                    id: `${val.key}`,
+                    source:val.key,
+                    "type": "raster",
+                    "minzoom": 0,
+                    "maxzoom": 22
+                });
+                this.$emit("getBaseMap",val);
             }
         }
     }
