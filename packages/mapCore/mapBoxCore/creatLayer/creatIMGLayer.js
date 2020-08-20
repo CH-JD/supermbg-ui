@@ -13,7 +13,6 @@ export default function creatRestLayer(map,options){
         return;
     }
     map.addLayer({
-        //添加别墅的geojson图层进行三维的显示
         id: `${options.id}`, //图层名称
         type: "raster", //显示类型为栅格
         source: {

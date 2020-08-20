@@ -29,7 +29,7 @@ class AddPopup {
 
     }
     regMapboxgl() {
-        if (typeof this._options.mapboxgl !== "function" || this._options.mapboxgl.Popup) {
+        if (typeof this._options.mapboxgl !== "object" || typeof this._options.mapboxgl.Popup!=='function') {
             console.error("实例化地图不存在");
             return false;
         } else {
@@ -52,43 +52,45 @@ class AddPopup {
         }
     }
     init(){
-        if(this._options.map.type&&this._options.map.layerID&&this.regLayer()){
-            this._options.map.on(`${this._options.map.type}`, `${this._options.map.layerID}`, e => {
-                let properties = this._options.data||e.features[0].properties;
-                let html = `<div class = ${this._options.class.wClass||'mapbox-tip-box-cotroller'}><h4>${properties.title}</h4><div class=${this._options.class.lwClass||'mapbox-tip-content-cotroller'}>`;
-                for(let key in properties){
-                    if(properties.key&&properties.key.indexOf(this._options.showKey)){
-                        html += `<p class=${this._options.class.lClass||'mapbox-tip-content-cotroller'}>key:${properties[key] || ""}</p>`;
-                    }
-                }
-                html += `</div></div>`;
-                this.addPopup(html);
+        if(this._options.type&&this._options.layerID&&this.regLayer()){
+            this._options.map.on(`${this._options.type}`, `${this._options.layerID}`, e => {
+                this.addPopup(e.features[0].properties);
             });
-            this._options.map.type ==="mouseover"&&this._options.map.on("mouseout", `${this._options.map.layerID}`, e => {
+            this._options.type ==="mouseover"&&this._options.map.on("mouseout", `${this._options.layerID}`, e => {
                 window.Popup.remove();
             });
         }
     }
-    addPopup(htmlNode){
-        if(!window.Popup&&this.regMapboxgl()){
-            window.Popup = new this._options.mapboxgl.Popup(this._options.popup||{
-                anchor: "left",
-                closeButton: false,
-                closeOnClick: true
-            });
-        }
-        if(this.regMap()&&Array.isArray(this._options.lngLat)){
+    addPopup(properties){
+          if(!window.Popup&&this.regMapboxgl()){
+              window.Popup = new this._options.mapboxgl.Popup(this._options.popup||{
+                  anchor: "left",
+                  closeButton: false,
+                  closeOnClick: true
+              });
+          }
+          let html = `<div class = ${this._options.class.wClass||'mapbox-tip-box-cotroller'}><h4>${this._options.title}</h4><div class=${this._options.class.lwClass||'mapbox-tip-content-cotroller'}>`;
+          for(let key in properties){
+            for(let val of this._options.showKey){
+                if(val.key === key){
+                    html += `<p class=${this._options.class.lClass}>${val.name}:${properties[key] || ""}</p>`;
+                }
+                }
+            }
+
+        html += `</div></div>`;
+        if(this.regMap()&&Array.isArray(eval(this._options.lngLat))){
             this._options.map.flyTo({
-                center:this._options.lngLat
+                center:eval(this._options.lngLat)
             });
-            window.Popup.setHTML(htmlNode);
-            window.Popup.setLngLat(this._options.lngLat);
+            window.Popup.setHTML(html);
+            window.Popup.setLngLat(eval(this._options.lngLat));
             window.Popup.addTo(this._options.map);
 
         }
     }
 }
-window.addPopupHandler = function(options){
+export default function addPopupHandler(options){
     return new AddPopup(options);
 }
 

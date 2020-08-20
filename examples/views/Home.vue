@@ -2,7 +2,8 @@
   <div id="map-box">
     <div id="map"></div>
     <!--<map-con :mapConfig = mapConfig @getConfig="getConfig"></map-con>-->
-    <base-map :map="map" :baseMapConfig="baseMapConfig" @getBaseMap="getBaseMap"></base-map>
+    <!--<fig-attr :data="data" :keyInfo="keyInfo" :map="map" :layerConfig = layerConfig :mapboxgl="mapboxgl" v-if="map"></fig-attr>-->
+    <!--<base-map :map="map" :baseMapConfig="baseMapConfig" @getBaseMap="getBaseMap"></base-map>-->
     <!--<chart :id="'comBar'" :type="'bar,comBar'" style="position:fixed;z-index:9999;left:0;top:10px;width: 500px;height:400px"></chart>-->
   </div>
 </template>
@@ -14,6 +15,72 @@
         name: 'home',
         data(){
             return {
+                mapboxgl,
+                data:[
+                    {
+                        name:"水稻",
+                        metrics:"产量",
+                        unit:"吨",
+                        space:"郑州市",
+                        lngLat:[113.65,34.76],
+                        value:100,
+                    },
+                    {
+                        name:"水稻",
+                        metrics:"产量",
+                        unit:"吨",
+                        space:"开封市",
+                        lngLat:[114.35,34.79],
+                        value:50,
+                    },
+                    {
+                        name:"水稻",
+                        metrics:"产量",
+                        unit:"吨",
+                        space:"荥阳",
+                        lngLat:[113.35,34.79],
+                        value:90,
+                    },
+                    {
+                        name:"水稻",
+                        metrics:"产量",
+                        unit:"吨",
+                        space:"平顶山",
+                        lngLat:[113.29,33.75],
+                        value:70,
+                    },
+                    {
+                        name:"水稻",
+                        metrics:"产量",
+                        unit:"吨",
+                        space:"新郑",
+                        lngLat:[113.71,34.4],
+                        value:90,
+                    },
+                    {
+                        name:"水稻",
+                        metrics:"产量",
+                        unit:"吨",
+                        space:"登封",
+                        lngLat:[113.02,34.46],
+                        value:66,
+                    },
+                ],
+                keyInfo:[
+                    {key:"name", name:"名称"},
+                    {key:"metrics",name:"类型"},
+                    {key:"space",name:"地区"},
+                    {key:"value",name:"产值"},
+                    {key:"unit",name:"单位"}
+
+                ],
+                layerConfig:{
+                    type:"point",
+                    showTip:true,
+                    showIcon:true,
+                    showLabel:true,
+                    icon:require("../assets/soil.png"),
+                },
                 map:null,
                 baseMapConfig:[
                     {
@@ -23,7 +90,6 @@
                         bounds: "",
                         label: "",
                         center: [],
-                        zIndex: 0,
                         checked:false,
                         isShow: true
                     },
@@ -34,7 +100,6 @@
                         bounds: "",
                         label: "",
                         center: [],
-                        zIndex: 0,
                         checked:false,
                         isShow: true
                     },
@@ -45,7 +110,6 @@
                         bounds: "",
                         label: "",
                         center: [],
-                        zIndex: 1,
                         checked:true,
                         isShow: true
                     },
@@ -56,7 +120,6 @@
                         bounds: "",
                         label: "",
                         center: [],
-                        zIndex: 2,
                         checked:false,
                         isShow: true
                     }
@@ -313,10 +376,12 @@
             }
         },
         mounted(){
+            const  glyphsUrl ='../assets/fonts/{fontstack}/{range}.pbf';
             this.map=Vue.prototype.$map = new mapboxgl.Map({
                 container: 'map',
                 style:{
                     "version": 8,
+                    "glyphs": `${glyphsUrl}`,
                     "sources": {
                         "raster-tiles": {
                             "type": "raster",
@@ -347,8 +412,8 @@
             getConfig:function (val) {
                 console.log(val);
             },
-            getBaseMap:function(val){
-                console.log(val);
+            getBaseMap:function(obj){
+                console.log(obj);
             }
         }
     }
