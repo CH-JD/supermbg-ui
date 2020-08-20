@@ -26,5 +26,5 @@ Vue.use(supermbglUi)
 2.工具
 ``` 
 #举例
-this.PaintControlClass()
+this.mapCore.PaintControlClass()
 ```
