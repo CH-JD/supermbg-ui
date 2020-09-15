@@ -2,7 +2,7 @@
 基于 vue-cli3 的 map 成果库
 ### registry
 ```
-npm config set registry 'http://192.168.100.14:8081/repository/npm-group/' 
+npm config set registry "http://192.168.100.14:8081/repository/npm-group/" 
 ```
 ### Install
 ```
@@ -21,7 +21,7 @@ Vue.use(supermbglUi)
 1.组件
 ``` 
 #举例
-<charts :id="'comBar'" :type="'bar,comBar'"   :data='data' :config=config class="charts" @chartClick = chartClick></charts>
+<base-map :mapList="mapList" @getBaseMap="getBaseMap"></base-map>
 ```
 2.工具
 ``` 
