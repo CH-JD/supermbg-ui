@@ -1,9 +1,5 @@
-import("../../_static/_libs/mapboxgl/mapbox-gl-enhance.css")
-import("../../_static/_libs/iclient-mapboxgl/iclient-mapboxgl.min.css");
-import("../../_static/_libs/mapbox-gl-draw/mapbox-gl-draw.css");
-import("../../_static/_libs/mapboxgl/mapbox-gl-enhance");
-import("../../_static/_libs/iclient-mapboxgl/iclient-mapboxgl.min");
-import("../../_static/_libs/mapbox-gl-draw/mapbox-gl-draw");
+
+
 import Source from './Source';
 import Layer from './Layer';
 const MapMixin  = {

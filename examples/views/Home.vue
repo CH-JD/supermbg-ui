@@ -5,14 +5,14 @@
     <!--<map-config :mapConfig = mapConfig @getConfig="getConfig"></map-config>-->
     <!-- <fig-attr :data="data" :keyInfo="keyInfo" :map="map" :layerConfig = layerStyle :mapboxgl="mapboxgl" v-if="map"></fig-attr>-->
     <base-map :mapList="mapList" :mapbox="mapbox" @getBaseMap="getBaseMap"></base-map>
-    <div id="__map-config-box">
+<!--    <div id="__map-config-box">
       <div id="__map-layer">
         <layer-control style="background-color: #182b44" :layerArr="layerArr"  @saveLayer="saveLayer" @getCurrentLayer="getCurrentLayer"></layer-control>
       </div>
       <div id="__map-config">
         <map-config :mapConfig = mapConfig :currentLayer="currentLayer"  @getConfig="getConfig" ></map-config>
       </div>
-    </div>
+    </div>-->
     <!--<map-legend :legendConfig=legendConfig  @getLegendActive="getLegendActive"></map-legend>-->
   </div>
 </template>

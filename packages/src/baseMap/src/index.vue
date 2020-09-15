@@ -16,7 +16,7 @@
 </template>
 <script>
     import Vue from "vue";
-    import  '../../../_static/_libs/mapboxgl/mapbox-gl-enhance';
+    import mapboxgl from "mapbox-gl"
     import '@supermap/iclient-mapboxgl';
     export default {
         name: 'baseMap',

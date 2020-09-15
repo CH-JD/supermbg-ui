@@ -1,6 +1,6 @@
 {
   "name": "supermbgl-ui",
-  "version": "0.2.2",
+  "version": "0.2.4",
   "description": "基于vue-cli3的mapboxgl的组件库",
   "main": "lib/supermbgl-ui.umd.min.js",
   "keywords": "supermbgl-ui",
@@ -12,10 +12,11 @@
     "lib": "vue-cli-service build --target lib --name supermbgl-ui --dest lib packages/index.js"
   },
   "dependencies": {
+    "@supermap/iclient-mapboxgl": "^10.1.0-alpha",
     "babel-polyfill": "^6.26.0",
     "core-js": "^2.6.9",
-    "@supermap/iclient-mapboxgl": "^10.1.0-alpha",
     "element-ui": "^2.13.2",
+    "mapbox-gl": "^1.12.0",
     "vue": "^2.6.6",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"

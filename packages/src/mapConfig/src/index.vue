@@ -262,7 +262,6 @@
             mapConfig:{
                 handler(newVal,oldVal){
                     if(newVal){
-                        console.log(newVal);
                         this.clonConfig = JSON.parse(JSON.stringify(newVal));
                         this.boundariesColor = this.clonConfig.boderConfig&&this.clonConfig.boderConfig.color||"#C71585";
                         this.boundariesWidth = this.clonConfig.boderConfig&&this.clonConfig.boderConfig.width||0.25;

@@ -4,7 +4,6 @@ import router from './router'
 import store from './store'
 // 导入组件库
 import supermbglUi from './../packages'
-import '@supermap/iclient-mapboxgl';
 // 注册组件库
 Vue.use(supermbglUi)
 import ElementUI from 'element-ui';
