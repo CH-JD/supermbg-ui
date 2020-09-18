@@ -16,7 +16,10 @@
 </template>
 <script>
     import Vue from "vue";
-    import mapboxgl from "mapbox-gl"
+    //import mapboxgl from 'mapbox-gl';
+    import mapboxgl from '../../../../public/cdn/mapboxgl/mapbox-gl-enhance'
+    import '../../../../public/cdn/iclient-mapboxgl/iclient-mapboxgl.min';
+    import mapv from '../../../../public/cdn/mapv/mapv'
     import '@supermap/iclient-mapboxgl';
     export default {
         name: 'baseMap',
@@ -81,7 +84,7 @@
                 console.log(e);
             }
             this.map.on('load',()=> {
-                 this.$emit("getBaseMap",{val:this.currentMap,index:0,map:this.map,mapboxgl});
+                this.$emit("getBaseMap",{val:this.currentMap,index:0,map:this.map,mapboxgl});
             });
         },
         methods:{
@@ -134,7 +137,7 @@
                     center
                 });
                 for(let item of nowVer.dataInfoList){
-                    supermbglUi._mapCore.creatRestLayer(this.map,{
+                    supermbglUi ._mapCore.creatRestLayer(this.map,{
                         id: `${item.id}`,
                         url:item.resourceUrl+"/zxyTileImage.png?transparent=true&z={z}&x={x}&y={y}",
                         source:item.id,

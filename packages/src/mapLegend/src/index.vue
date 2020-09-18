@@ -22,7 +22,11 @@
 </template>
 
 <script>
-    import mapMixin from '../../../_mapcore/_sourceModel/index'
+    import Vue from "vue";
+    import mapboxgl from 'mapbox-gl';
+    import mapv from 'mapv';
+    import '@supermap/iclient-mapboxgl';
+    //import mapMixin from '../../../_mapcore/_sourceModel/index'
     export default {
         name: 'mapLegend',
         data () {
@@ -30,7 +34,7 @@
                 activeNames:null,
             }
         },
-        mixins:['mapMixin'],
+        //mixins:['mapMixin'],
         props:{
             'legendConfig':{
                 type:Object,

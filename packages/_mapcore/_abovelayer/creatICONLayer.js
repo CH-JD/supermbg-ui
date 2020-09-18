@@ -1,6 +1,6 @@
 
 import addImgLoad from "../addImgLoad";
-export default  (async function creatLabelLayer (map,options) {
+export default  (async function creatICONLayer (map,options) {
   if(!options.hasOwnProperty("id")||!map){
     throw  new Error("mvt服务传参不对必须要有服务url和服务Id");
     return;

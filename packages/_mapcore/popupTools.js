@@ -26,7 +26,6 @@
 class AddPopup {
     constructor(options){
         this._options = options;
-
     }
     regMapboxgl() {
         if (typeof this._options.mapboxgl !== "object" || typeof this._options.mapboxgl.Popup!=='function') {

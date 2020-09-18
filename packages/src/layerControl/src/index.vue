@@ -5,17 +5,17 @@
       <el-collapse v-model="activeName" accordion>
         <el-collapse-item v-for="(item,pIndex) of cloneNewVal" :name="pIndex" :key="pIndex" >
           <template slot="title">
-            <h5><em :style="{backgroundImage:'url('+iconOpen+')'}"></em> {{item.layerName}}</h5>
+            <h5><em :style="{backgroundImage:'url('+iconOpen+')'}"></em> {{item.name}}</h5>
           </template>
           <div class="__layer-list">
             <div class="__layer-list-top">
               <div class="__opactiy-font">透明度</div>
-              <div class="__layer-slider-box"><el-slider @change="changeCheckedOpacity" :show-tooltip="false" v-model="opacityValue"></el-slider></div>
+              <div class="__layer-slider-box"><el-slider @change="__saveLayer('opacity',opacityValue,pIndex)" :show-tooltip="false" v-model="opacityValue"></el-slider></div>
               <div class="__layer-text"> {{Math.abs(opacityValue)}}% </div>
               <div class="__layer-icon" :style="{backgroundImage:'url('+iconEdit+')'}" @click="editLayerHandler"></div>
-              <div class="__layer-icon" :style="{backgroundImage:'url('+iconDown+')'}"></div>
-              <div class="__layer-icon" :style="{backgroundImage:'url('+iconUp+')'}"></div>
-              <div class="__layer-icon" :style="{backgroundImage:'url('+iconDel+')'}"></div>
+              <div class="__layer-icon" :style="{backgroundImage:'url('+iconDown+')'}" @click="__saveLayer('down','',pIndex)"></div>
+              <div class="__layer-icon" :style="{backgroundImage:'url('+iconUp+')'}" @click="__saveLayer('up','',pIndex)"></div>
+              <div class="__layer-icon" :style="{backgroundImage:'url('+iconDel+')'}" @click="__saveLayer('delete','',pIndex)"></div>
             </div>
             <div class="__layer-list-legend">
               <ul class="__legend-box">
@@ -39,7 +39,7 @@
             return {
                 currentLayer:null,
                 cloneNewVal:null,
-                opacityValue:1,
+                opacityValue:100,
                 activeName:0,
                 iconSave:require('./assets/images/icon-save.png'),
                 iconClose:require("./assets/images/eye-close.png"),
@@ -55,6 +55,10 @@
                 type:Array,
                 default:()=>[]
             },
+            'opacity':{
+                type:Number,
+                default:()=>1,
+            }
         },
         created(){
         },
@@ -67,9 +71,12 @@
                 this.$emit("getCurrentLayer",this.layerArr[this.activeName])
             },
             getConfig:function(val){
+                console.log(val);
                 switch (val.type) {
                     case "renderType":
                         this.mapConfig.layerConfig.renderType = val.value;
+                        this.mapConfig.layerConfig.layerName = val.layerName;
+                        this.mapConfig.layerConfig.type = val.layerType;
                         break;
                     case "boundariesColor":
                         this.mapConfig.boderConfig.color = val.value;
@@ -89,36 +96,28 @@
                         break;
                 }
             },
-            __saveLayer:function(type){
-              this.$emit("saveLayer",this.layerArr)
+            __saveLayer:function(type,value,index){
+                this.$emit("saveLayer",{ type,value,index })
             },
-            selectAll:function () {
-
-            },
-            changeCheckedOpacity:function () {
-
-            },
-            toggleIndexUpFn:function () {
-
-            },
-            toggleIndexDownFn:function () {
-
-            },
-            deleteCheckedLayerFn:function () {
-
-            }
         },
         watch:{
+            opacity:{
+                handler(newVal,oldVal){
+                    this.opacityValue = newVal*100
+                },
+                deep:true,
+                immediate:true
+            },
             map:{
                 handler(newVal,oldVal){
-                   console.log(newVal);
+                    console.log(newVal);
                 },
                 deep:true,
                 immediate:true
             },
             layerArr:{
                 handler(newVal,oldVal){
-                  this.cloneNewVal = newVal;
+                    this.cloneNewVal = newVal;
                 },
                 deep:true,
                 immediate:true

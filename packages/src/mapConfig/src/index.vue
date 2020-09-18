@@ -2,7 +2,7 @@
   <div id="configBox" v-if="currentLayer">
     <h4 :style="{backgroundImage:'url('+iconEdit+')'}">智能可视化配置 <em><img :src="iconTrangleTop" @click="trangle=!trangle"></em></h4>
     <div class="row-box" v-show="trangle">
-      <div class="_title">{{currentLayer.layerName}}</div>
+      <div class="_title">{{currentLayer.name}}</div>
       <form>
         <el-row type="flex">
           <el-col class="label-font">渲染方式:</el-col>
@@ -12,7 +12,7 @@
           <el-col :span="24">
             <div id="__render-box">
               <ul id="__render-list">
-                <li v-for="(item,index) of layerData" @click="setConfig('renderType',item.layerType)" :key="index" :class="{actived:item.layerType===clonConfig.layerConfig.renderType}">
+                <li v-for="(item,index) of layerData" @click="setConfig('renderType',item.layerType,item.name,item.type)" :key="index" :class="{actived:item.layerType===renderType}">
                   <img v-if="item.layerType===renderType" :src="item.activeIcon">
                   <img v-else :src="item.icon">
                   <span>{{item.name}}</span>
@@ -42,7 +42,6 @@
                       v-model="boundariesWidth"
                       placeholder="请选择">
                 <el-option
-
                         v-for="item in boundariesWidthOptions"
                         :key="item.value"
                         :label="item.label"
@@ -110,7 +109,7 @@
                           :key="index"
                           :value="item.icon">
                     <span></span>
-                    <img :src="'/mongo/file/download/'+item.icon+'.png'" />
+                    <img :src="'/mongo/file/download/'+item.icon" />
                   </el-option>
             </el-select>
           </el-col>
@@ -132,49 +131,83 @@
                     value:"id"
                 },
                 renderType:"scatter",
-                clonConfig:null,
+                clonConfig:{
+                    iconConfig:{
+                        iconId:"",
+                        iconClass:"",
+                        iconTree: [],
+                        iconPath: [],
+                    },
+                    layerConfig:{
+
+                    },
+                    boderConfig:{
+                        isShow:true,
+                        color:"#ffffff",
+                        width:1
+                    },
+                    renderColor:{
+                        isShow:true,
+                        color:"绿色-蓝色",
+                        defaultConfigColorArr:[],
+                    }
+                },
                 layerData:[
                     {
-                        type:"point",
+                        type:"point_icon",
                         icon:require("./assets/images/scatter.png"),
                         activeIcon:require("./assets/images/scatter_active.png"),
                         name:"散点图",
                         layerType:"scatter"
                     },
                     {
-                        type:"point",
+                        type:"point_view",
                         icon:require("./assets/images/cluster.png"),
                         activeIcon:require("./assets/images/cluster_active.png"),
                         name:"聚合图",
                         layerType:"cluster"
                     },
                     {
-                        type:"point",
+                        type:"point_view",
                         icon:require("./assets/images/honeycomb.png"),
                         activeIcon:require("./assets/images/honeycomb_active.png"),
                         name:"蜂巢图",
                         layerType:"honeycomb"
                     },
                     {
-                        type:"point",
+                        type:"point_view",
                         icon:require("./assets/images/grid.png"),
                         activeIcon:require("./assets/images/grid.png"),
                         name:"格网图",
                         layerType:"grid"
                     },
                     {
-                        type:"point",
+                        type:"point_view",
                         icon:require("./assets/images/heat.png"),
                         activeIcon:require("./assets/images/heat_active.png"),
                         name:"热力图",
                         layerType:"heat"
                     },
                     {
-                        type:"point",
+                        type:"point_view",
                         icon:require("./assets/images/hexagon.png"),
                         activeIcon:require("./assets/images/hexagon_active.png"),
                         name:"柱状图",
                         layerType:"hexagon"
+                    },
+                    {
+                        type:"polygon",
+                        icon:require("./assets/images/subSec.png"),
+                        activeIcon:require("./assets/images/subSec_active.png"),
+                        name:"分段专题",
+                        layerType:"subSec"
+                    },
+                    {
+                        type:"polygon",
+                        icon:require("./assets/images/block.png"),
+                        activeIcon:require("./assets/images/block_active.png"),
+                        name:"按值三维",
+                        layerType:"block"
                     },
                 ],
                 trangle:true,
@@ -236,8 +269,8 @@
             setRenderIconClass(val){
                 this.$emit("iconClass",{classId:val});
             },
-            setConfig:function(type,value){
-                this.$emit("getConfig",{value, type});
+            setConfig:function(type,value,layerName,layerType){
+                this.$emit("getConfig",{value, type,layerName,layerType});
             },
             submitUploadImg(){
 
@@ -271,6 +304,7 @@
                         this.renderIcon =this.clonConfig.iconConfig.iconId&&this.clonConfig.iconConfig.iconId||"5f56d9ba7f3f8a0a4c21162d";
                     }
                 },
+                immediate:true,
                 deep:true,
             },
             currentLayer:{
@@ -340,7 +374,7 @@
           color: #c9e2f1;
           flex: 0 0 50px;
           height: 50px;
-          margin: 0 25px 10px 10px;
+          margin: 0 5px 10px 5px;
           border-radius: 2px;
           background-repeat: no-repeat;
           background-position: center 0;

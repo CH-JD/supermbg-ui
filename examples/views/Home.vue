@@ -5,18 +5,18 @@
     <!--<map-config :mapConfig = mapConfig @getConfig="getConfig"></map-config>-->
     <!-- <fig-attr :data="data" :keyInfo="keyInfo" :map="map" :layerConfig = layerStyle :mapboxgl="mapboxgl" v-if="map"></fig-attr>-->
     <base-map :mapList="mapList" :mapbox="mapbox" @getBaseMap="getBaseMap"></base-map>
-<!--    <div id="__map-config-box">
+    <div id="__map-config-box">
       <div id="__map-layer">
-        <layer-control style="background-color: #182b44" :layerArr="layerArr"  @saveLayer="saveLayer" @getCurrentLayer="getCurrentLayer"></layer-control>
+        <layer-control style="background-color: #182b44" :layerArr="layerArr" :opacity="mapConfig.opacityConfig.value"  @saveLayer="saveLayer" @getCurrentLayer="getCurrentLayer"></layer-control>
       </div>
       <div id="__map-config">
         <map-config :mapConfig = mapConfig :currentLayer="currentLayer"  @getConfig="getConfig" ></map-config>
       </div>
-    </div>-->
+    </div>
     <!--<map-legend :legendConfig=legendConfig  @getLegendActive="getLegendActive"></map-legend>-->
   </div>
 </template>
-<script>;
+<script>
 export default {
     name: 'home',
     data(){
@@ -26,10 +26,11 @@ export default {
             layerArr:[
                 {
                     layerId:new Date().getTime(),
-                    layerName:"地灾点",
+                    layerName:"散点图",
+                    name:"地灾点",
                     opacity:1,
-                    layerType:'rest',
-                    type:'point',
+                    layerType:'scatter',
+                    type:'point_icon',
                     legendType:"color",
                     legend:[
                         {
@@ -58,10 +59,11 @@ export default {
                 },
                 {
                     layerId:new Date().getTime(),
-                    layerName:"群测群防",
+                    layerName:"格网图",
+                    name:"群测群防",
                     opacity:1,
-                    layerType:'rest',
-                    type:'point',
+                    layerType:'grid',
+                    type:'point_view',
                     legendType:"icon",
                     legend:[
                         {
@@ -216,6 +218,9 @@ export default {
                     "mapVersionDtoList":[{"id":"1303234962580885505","versionCode":null,"versionName":"新版本_1","layerIds":"c131c7d7-b748-4b08-8f91-48ecd6455cf6,6e099edb-69e4-453d-8bd9-b3dbe989678c","dataInfoList":[{"id":"c131c7d7-b748-4b08-8f91-48ecd6455cf6","resourceName":"世界地图矢量黑夜","resourceTypeBig":"2","resourceTypeSmall":"5","resourceUrl":"http://192.168.191.239:8090/iserver/services/map-world/rest/maps/世界地图_Day","delFlag":null,"resourceSummary":"世界地图矢量黑夜","deptId":"1","deptName":null,"sourceId":null,"sourceName":null,"resourceDate":null,"shopFlag":"1","metedataId":null},{"id":"6e099edb-69e4-453d-8bd9-b3dbe989678c","resourceName":"京津地区地形图","resourceTypeBig":"2","resourceTypeSmall":"5","resourceUrl":"http://192.168.191.239:8090/iserver/services/map-jingjin/rest/maps/京津地区地图","delFlag":null,"resourceSummary":"京津地区地形图","deptId":"1","deptName":null,"sourceId":null,"sourceName":null,"resourceDate":null,"shopFlag":"1","metedataId":null}]}]},
             ],
             mapConfig:{
+                opacityConfig:{
+                    value:1
+                },
                 iconConfig:{
                     iconId:"5f56d9ba7f3f8a0a4c21162d",
                     iconClass:"1303136885643796481",
@@ -223,12 +228,9 @@ export default {
                     iconPath: [{"id":"1303136966665166850","iconTypeId":"1303136885643796481","iconName":"蛋鸡","icon":"5f56d9ba7f3f8a0a4c21162d","delFlag":null,"typeName":"蛋鸡"},{"id":"1305312317856124929","iconTypeId":"1305312215414444034","iconName":"默认符号1","icon":"5f5ec3ce7f3f8a0a4c211673","delFlag":null,"typeName":"默认符号"},{"id":"1305312429856624642","iconTypeId":"1305312215414444034","iconName":"默认符号2","icon":"5f5ec3e97f3f8a0a4c211675","delFlag":null,"typeName":"默认符号"},{"id":"1305426060476788737","iconTypeId":"1305311816984924162","iconName":"冰雹","icon":"5f5f2dbc7f3f8a0a4c2116a1","delFlag":null,"typeName":"灾害"},{"id":"1305426290001686530","iconTypeId":"1305311816984924162","iconName":"霜冻","icon":"5f5f2df27f3f8a0a4c2116a3","delFlag":null,"typeName":"灾害"},{"id":"1305426437842513921","iconTypeId":"1305311816984924162","iconName":"雷暴","icon":"5f5f2e167f3f8a0a4c2116a5","delFlag":null,"typeName":"灾害"},{"id":"1305426711487295490","iconTypeId":"1305311816984924162","iconName":"风暴","icon":"5f5f2e577f3f8a0a4c2116a7","delFlag":null,"typeName":"灾害"}],
                 },
                 layerConfig:{
-                    name:"事故",
-                    layerId:"",
-                    data:[],
-                    id:"",
-                    type:"point",
+                    layerName:"散点图",
                     renderType:"scatter",
+                    type:'point_icon'
                 },
                 boderConfig:{
                     isShow:true,
@@ -493,8 +495,9 @@ export default {
         }
     },
     methods:{
-        saveLayer:function(val){
+        saveLayer:function(val,value,index){
             console.log(val);
+
         },
         getCurrentLayer:function(val){
             this.currentLayer =val;
