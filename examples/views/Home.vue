@@ -4,7 +4,7 @@
 
     <!--<map-config :mapConfig = mapConfig @getConfig="getConfig"></map-config>-->
     <!-- <fig-attr :data="data" :keyInfo="keyInfo" :map="map" :layerConfig = layerStyle :mapboxgl="mapboxgl" v-if="map"></fig-attr>-->
-    <base-map :mapList="mapList" :mapbox="mapbox" @getBaseMap="getBaseMap"></base-map>
+    <base-map :mapList="mapList" :sources="defaultSource" :activeIndex="activeIndex" :mapbox="mapbox" @getBaseMap="getBaseMap"></base-map>
     <div id="__map-config-box">
       <div id="__map-layer">
         <layer-control style="background-color: #182b44" :layerArr="layerArr" :opacity="mapConfig.opacityConfig.value"  @saveLayer="saveLayer" @getCurrentLayer="getCurrentLayer"></layer-control>
@@ -21,8 +21,29 @@ export default {
     name: 'home',
     data(){
         return {
+        		activeIndex:0,
             currentLayer:null,
             mapbox:'map',
+            defaultSource:{
+                "areaPro":{
+                    "type": "vector",
+                    "tiles": ['http://192.168.191.239:8090/iserver/services/map-XZQH/restjsr/v1/vectortile/maps/PROV/tiles/{z}/{x}/{y}.mvt'],
+                    "tileSize": 256,
+                    "rasterSource": "iserver",
+                },
+                "areaCity":{
+                    "type": "vector",
+                    "tiles": ['http://192.168.191.239:8090/iserver/services/map-XZQH/restjsr/v1/vectortile/maps/CITY/tiles/{z}/{x}/{y}.mvt'],
+                    "tileSize": 256,
+                    "rasterSource": "iserver",
+                },
+                "areaArea":{
+                    "type": "vector",
+                    "tiles": ['http://192.168.191.239:8090/iserver/services/map-XZQH/restjsr/v1/vectortile/maps/AREA/tiles/{z}/{x}/{y}.mvt'],
+                    "tileSize": 256,
+                    "rasterSource": "iserver",
+                },
+            },
             layerArr:[
                 {
                     layerId:new Date().getTime(),
@@ -197,14 +218,14 @@ export default {
                     "icon":"base_v",
                     "sortIndex":1,
                     "defaultFlag":"1",
-                    "serviceUrl":"https://iserver.supermap.io/iserver/services/data-world/rest/data",
+                    "serviceUrl":"https://iserver.supermap.io/iserver/services/map-china400/rest/maps/China_4490",
                     "versionIds":"1301451146820325378,1301451146832908290",
                     "mapVersionDtoList":[
                         {"id":"1301451146820325378",
                             "versionCode":null,
                             "versionName":"新版本_1",
                             "layerIds":"07ada57a-bf47-470b-b56f-d4779dd94d47",
-                            "dataInfoList":[{"id":"07ada57a-bf47-470b-b56f-d4779dd94d47","resourceName":"中国矢量图","resourceTypeBig":"2","resourceTypeSmall":"5","resourceUrl":"http://192.168.191.239:8090/iserver/services/map-china400/rest/maps/China","delFlag":null,"resourceSummary":"中国矢量图","deptId":"1","deptName":null,"sourceId":null,"sourceName":null,"resourceDate":null,"shopFlag":"1","metedataId":null}]},{"id":"1301451146832908290","versionCode":null,"versionName":"新版本_2","layerIds":"f7aeca53-cd8b-43c8-86c9-a87cb20c0d35","dataInfoList":[{"id":"f7aeca53-cd8b-43c8-86c9-a87cb20c0d35","resourceName":"长春市区矢量图","resourceTypeBig":"2","resourceTypeSmall":"5","resourceUrl":"http://192.168.191.239:8090/iserver/services/map-changchun/rest/maps/长春市区图","delFlag":null,"resourceSummary":"长春市区矢量图","deptId":"1","deptName":null,"sourceId":null,"sourceName":null,"resourceDate":null,"shopFlag":"1","metedataId":null}]}]},
+                            "dataInfoList":[{"id":"07ada57a-bf47-470b-b56f-d4779dd94d47","resourceName":"中国矢量图","resourceTypeBig":"2","resourceTypeSmall":"5","resourceUrl":"https://iserver.supermap.io/iserver/services/map-china400/rest/maps/China_4490","delFlag":null,"resourceSummary":"中国矢量图","deptId":"1","deptName":null,"sourceId":null,"sourceName":null,"resourceDate":null,"shopFlag":"1","metedataId":null}]},{"id":"1301451146832908290","versionCode":null,"versionName":"新版本_2","layerIds":"f7aeca53-cd8b-43c8-86c9-a87cb20c0d35","dataInfoList":[{"id":"f7aeca53-cd8b-43c8-86c9-a87cb20c0d35","resourceName":"长春市区矢量图","resourceTypeBig":"2","resourceTypeSmall":"5","resourceUrl":"http://192.168.191.239:8090/iserver/services/map-changchun/rest/maps/长春市区图","delFlag":null,"resourceSummary":"长春市区矢量图","deptId":"1","deptName":null,"sourceId":null,"sourceName":null,"resourceDate":null,"shopFlag":"1","metedataId":null}]}]},
                 {
                     "id":"1303234962673160194",
                     "mapName":"深空黑夜图",
@@ -222,6 +243,7 @@ export default {
                     value:1
                 },
                 iconConfig:{
+                    isShow:true,
                     iconId:"5f56d9ba7f3f8a0a4c21162d",
                     iconClass:"1303136885643796481",
                     iconTree: [{"id":"1303136637382942722","typeName":"畜牧业","parentId":"0","delFlag":null,"child":[{"id":"1303136851518939137","typeName":"家庭农场","parentId":"1303136637382942722","delFlag":null,"child":[{"id":"1303136885643796481","typeName":"蛋鸡","parentId":"1303136851518939137","delFlag":null,"child":null}]}]},{"id":"1303136770682118145","typeName":"种植业","parentId":"0","delFlag":null,"child":null},{"id":"1305311816984924162","typeName":"灾害","parentId":"0","delFlag":null,"child":null},{"id":"1305312215414444034","typeName":"默认符号","parentId":"0","delFlag":null,"child":null}],

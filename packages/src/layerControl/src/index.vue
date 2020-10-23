@@ -51,6 +51,10 @@
             }
         },
         props:{
+        		'activeIndex':{
+        			type:Number,
+        			default:()=>0
+        		},
             'layerArr':{
                 type:Array,
                 default:()=>[]
@@ -101,6 +105,11 @@
             },
         },
         watch:{
+        		activeIndex:{
+        			handler(newVal,oldVal){
+                  this.activeName = newVal
+                },
+        		},
             opacity:{
                 handler(newVal,oldVal){
                     this.opacityValue = newVal*100

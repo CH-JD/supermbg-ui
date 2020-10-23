@@ -30,6 +30,10 @@
             }
         },
         props:{
+            sources:{
+                type:Object,
+                default:() => {}
+            },
             mapList:{
                 type:Array,
                 default:() => []
@@ -49,14 +53,16 @@
             let style ={
                 "version": 8,
                 "glyphs": `${glyphsUrl}`,
-                "sources": {},
+                "sources": this.sources,
                 "layers": [],
+                "trackResize":true
             };
             for(let val of this.currentMap.mapVersionDtoList[0].dataInfoList){
                 style.sources[val.id] = {
                     "type": "raster",
-                    "tiles": [val.resourceUrl+"/zxyTileImage.png?transparent=true&z={z}&x={x}&y={y}"],
-                    "tileSize": 256
+                    "tiles": [val.resourceUrl],
+                    "tileSize": 256,
+                    "rasterSource": "iserver"
                 }
                 style.layers.push({
                     "id": `${val.id}`,
@@ -71,19 +77,21 @@
                 this.map=Vue.prototype.$map = new mapboxgl.Map({
                     container: this.mapbox,
                     style,
-                    center,
-                    minZoom: 1,
-                    zoom: parseInt(this.currentMap.scale)||3.5,
-                    maxZoom: 18,
+                    crs: 'EPSG:4490',
+                    center: center,
+                    isConstrain: true,
                     renderWorldCopies: false,
                     preserveDrawingBuffer: !0,
+                    minZoom: 1,
+                    zoom: parseInt(this.currentMap.scale)||4,
+                    maxZoom: 18,
                     pitch: 0,//60 倾斜角度
                     bearing: 0//旋转角度
                 });
             } catch (e) {
                 console.log(e);
             }
-            this.map.on('load',()=> {
+            this.map.on('load',async ()=> {
                 this.$emit("getBaseMap",{val:this.currentMap,index:0,map:this.map,mapboxgl});
             });
         },
@@ -139,7 +147,7 @@
                 for(let item of nowVer.dataInfoList){
                     supermbglUi ._mapCore.creatRestLayer(this.map,{
                         id: `${item.id}`,
-                        url:item.resourceUrl+"/zxyTileImage.png?transparent=true&z={z}&x={x}&y={y}",
+                        url:item.resourceUrl,
                         source:item.id,
                         tileSize:256,
                         type: "raster",
@@ -153,6 +161,8 @@
     }
 </script>
 <style lang="scss" scoped>
+  @import "../../../../public/cdn/mapbox-gl-enhance/mapbox-gl-enhance.css";
+  @import "../../../../public/cdn/iclient-mapboxgl/iclient-mapboxgl.min.css";
   #_map-warp {
     position: fixed;
     z-index: 1;

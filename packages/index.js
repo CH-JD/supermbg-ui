@@ -16,7 +16,6 @@ if(!window.supermbglUi){
 }
 import layerControl from './src/layerControl/index.js'
 import mapConfig from './src/mapConfig'
-import baseMap from './src/baseMap/index.js'
 import figAttr from './src/figAttr/index.js'
 import drillMap from './src/drillMap/index.js'
 import mapLegend from './src/mapLegend/index.js'
@@ -25,7 +24,6 @@ const components = [
   layerControl,
   mapLegend,
   mapConfig,
-  baseMap,
   figAttr,
   drillMap
 ]

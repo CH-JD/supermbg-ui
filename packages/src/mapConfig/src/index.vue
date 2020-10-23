@@ -22,7 +22,7 @@
           </el-col>
 
         </el-row>
-        <el-row type="flex">
+        <el-row type="flex" v-show="clonConfig.boderConfig.isShow">
           <el-col class="label-font">边界颜色:</el-col>
           <el-col :span="24" class="__bounds-box">
             <div class="__bounds-box-left">
@@ -62,7 +62,7 @@
                 </el-select>-->
           </el-col>
         </el-row>
-        <el-row type="flex">
+        <el-row type="flex" v-show="clonConfig.renderColor.isShow">
           <el-col class="label-font" >渲染方案:</el-col>
           <el-col :span="24">
             <el-select
@@ -87,7 +87,7 @@
             </el-select>
           </el-col>
         </el-row>
-        <el-row type="flex">
+        <el-row type="flex" v-show="clonConfig.iconConfig.isShow">
           <el-col class="label-font" >符号配置:</el-col>
           <el-col :span="12" style="margin-right: 10px">
             <el-cascader
@@ -104,13 +104,13 @@
                     v-model="renderIcon"
                     @change="setConfig('renderIcon',renderIcon)"
                     placeholder="请选择">
-                  <el-option v-for="(item,index) in clonConfig.iconConfig.iconPath"
-                          :label="item.iconName"
-                          :key="index"
-                          :value="item.icon">
-                    <span></span>
-                    <img :src="'/mongo/file/download/'+item.icon" />
-                  </el-option>
+              <el-option v-for="(item,index) in clonConfig.iconConfig.iconPath"
+                         :label="item.iconName"
+                         :key="index"
+                         :value="item.icon">
+                <span></span>
+                <img :src="'/mongo/file/download/'+item.icon" />
+              </el-option>
             </el-select>
           </el-col>
         </el-row>
@@ -309,7 +309,7 @@
             },
             currentLayer:{
                 handler(newVal,oldVal){
-                  console.log(newVal);
+                    console.log(newVal);
                 }
             }
         },

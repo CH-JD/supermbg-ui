@@ -6,7 +6,7 @@
  * amt(同色系的明暗程度变化) + 变亮 -变暗
  *
  */
-class GetColorVal {
+export default class GetColorVal {
     constructor(colorVal,num,isRelative,amt){
         this.num = num;
         this.isRelative = isRelative;
@@ -96,7 +96,6 @@ class GetColorVal {
         }
         return [Math.round(R * 255), Math.round(G * 255), Math.round(B * 255)];
     }
-
     //颜色转换
     /**
      * RGB颜色值转换为HEX
